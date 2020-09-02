@@ -84,7 +84,7 @@ jobs:
           name: pack-${{ matrix.os }}
           path: out/${{ env.PACK_BIN }}
   release:
-    if: ${{ startsWith(github.ref, 'refs/heads/release/') }}
+#    if: ${{ startsWith(github.ref, 'refs/heads/release/') }}
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -154,20 +154,14 @@ jobs:
             require(scriptPath)({core, github, repository: "${{ github.repository }}", version: "${{ env.PACK_VERSION }}" });
       - name: Create Release
         id: create_release
-        uses: meeDamian/github-release@2.0
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: v${{ env.PACK_VERSION }}
+          tag_name: v${{ env.PACK_VERSION }}
           name: pack v${{ env.PACK_VERSION }}
           draft: true
-          gzip: false
-          files: >
-            pack-v${{ env.PACK_VERSION }}-macos.tgz
-            pack-v${{ env.PACK_VERSION }}-macos.tgz.sha256
-            pack-v${{ env.PACK_VERSION }}-linux.tgz
-            pack-v${{ env.PACK_VERSION }}-linux.tgz.sha256
-#            pack-v${{ env.PACK_VERSION }}-windows.zip
-#            pack-v${{ env.PACK_VERSION }}-windows.zip.sha256
+          files: pack-v${{ env.PACK_VERSION }}-*
           body: |
             # pack v${{ env.PACK_VERSION }}
             > This is a **beta** release of the Cloud Native Buildpack local CLI. This platform implementation should be relatively stable and reliable, but breaking changes in the underlying [specification](https://github.com/buildpack/spec) may be implemented without notice. Note that pack is intended for local image builds, and thus requires a Docker daemon. The [lifecycle](https://github.com/buildpack/lifecycle) should be used directly when building on cloud platforms.
