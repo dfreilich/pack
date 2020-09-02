@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        config: [macos, linux, windows-lcow, windows-wcow]
+        config: [macos, linux]
         include:
           - config: macos
             os: macos
@@ -37,16 +37,6 @@ jobs:
             runner: ubuntu-latest
             no_docker: "false"
             pack_bin: pack
-          - config: windows-lcow
-            os: windows
-            runner: [self-hosted, windows]
-            no_docker: "false"
-            pack_bin: pack.exe
-          - config: windows-wcow
-            os: windows
-            runner: [self-hosted, windows, wcow]
-            no_docker: "false"
-            pack_bin: pack.exe
     runs-on: ${{ matrix.runner }}
     env:
       PACK_BIN: ${{ matrix.pack_bin }}
@@ -116,10 +106,10 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: pack-linux
-      - name: Download artifacts - windows
-        uses: actions/download-artifact@v1
-        with:
-          name: pack-windows
+#      - name: Download artifacts - windows
+#        uses: actions/download-artifact@v1
+#        with:
+#          name: pack-windows
       - name: Package artifacts - macos
         run: |
           chmod +x pack-macos/pack
@@ -132,11 +122,11 @@ jobs:
           filename=pack-v${{ env.PACK_VERSION }}-linux.tgz
           tar -C pack-linux -vzcf $filename pack
           shasum -a 256 $filename > $filename.sha256
-      - name: Package artifacts - windows
-        run: |
-          filename=pack-v${{ env.PACK_VERSION }}-windows.zip
-          zip -j $filename pack-windows/pack.exe
-          shasum -a 256 $filename > $filename.sha256
+#      - name: Package artifacts - windows
+#        run: |
+#          filename=pack-v${{ env.PACK_VERSION }}-windows.zip
+#          zip -j $filename pack-windows/pack.exe
+#          shasum -a 256 $filename > $filename.sha256
       - name: Extract lifecycle version
         id: lifecycle_version
         run: |
@@ -176,8 +166,8 @@ jobs:
             pack-v${{ env.PACK_VERSION }}-macos.tgz.sha256
             pack-v${{ env.PACK_VERSION }}-linux.tgz
             pack-v${{ env.PACK_VERSION }}-linux.tgz.sha256
-            pack-v${{ env.PACK_VERSION }}-windows.zip
-            pack-v${{ env.PACK_VERSION }}-windows.zip.sha256
+#            pack-v${{ env.PACK_VERSION }}-windows.zip
+#            pack-v${{ env.PACK_VERSION }}-windows.zip.sha256
           body: |
             # pack v${{ env.PACK_VERSION }}
             > This is a **beta** release of the Cloud Native Buildpack local CLI. This platform implementation should be relatively stable and reliable, but breaking changes in the underlying [specification](https://github.com/buildpack/spec) may be implemented without notice. Note that pack is intended for local image builds, and thus requires a Docker daemon. The [lifecycle](https://github.com/buildpack/lifecycle) should be used directly when building on cloud platforms.
