@@ -57,7 +57,7 @@ jobs:
       - name: Derive pack version from branch name
         run: |
           [[ $GITHUB_REF =~ ^refs\/heads\/release/(.*)$ ]] && version=${BASH_REMATCH[1]} || version=0.0.0
-          echo "::set-env name=PACK_VERSION::$version"
+          echo "PACK_VERSION=${version}" >> $GITHUB_ENV
         shell: bash
       - name: Set up go
         uses: actions/setup-go@v2.1.3
@@ -65,8 +65,8 @@ jobs:
           go-version: '1.14'
       - name: Set up go env
         run: |
-          echo "::set-env name=GOPATH::$(go env GOPATH)"
-          echo "::add-path::$(go env GOPATH)/bin"
+          echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
       - name: Verify
         run: make verify
       - name: Test
@@ -83,7 +83,7 @@ jobs:
         run: make build
         env:
           PACK_BUILD: ${{ github.run_number }}
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         if: matrix.config != 'windows-wcow'
         with:
           name: pack-${{ matrix.os }}
@@ -103,27 +103,23 @@ jobs:
             echo "ERROR: pack version not detected."
             exit 1
           fi
-          echo "::set-env name=PACK_VERSION::${version}"
+          echo "PACK_VERSION=${version}" >> $GITHUB_ENV
 
-          [[ "${version}" =~ ^([^-]+).*$ ]] && milestone=${BASH_REMATCH[1]}
-          if [[ -z "${milestone}" ]]; then
-            echo "ERROR: couldn't determine the milestone to lookup from version: ${version}."
-            exit 1
-          fi
-
-          echo "::set-env name=PACK_MILESTONE::${milestone}"
-      - name: Download artifacts - macos
-        uses: actions/download-artifact@v1
-        with:
-          name: pack-macos
-      - name: Download artifacts - linux
-        uses: actions/download-artifact@v1
-        with:
-          name: pack-linux
-      - name: Download artifacts - windows
-        uses: actions/download-artifact@v1
-        with:
-          name: pack-windows
+#          [[ "${version}" =~ ^([^-]+).*$ ]] && milestone=${BASH_REMATCH[1]}
+#          if [[ -z "${milestone}" ]]; then
+#            echo "ERROR: couldn't determine the milestone to lookup from version: ${version}."
+#            exit 1
+#          fi
+#
+#          echo "PACK_MILESTONE=${milestone}" >> $GITHUB_ENV
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+      - name: Test contents
+        run: |
+          ls
+          ls pack-macos
+          ls pack-linux
+          ls pack-windows
       - name: Package artifacts - macos
         run: |
           chmod +x pack-macos/pack
@@ -156,12 +152,12 @@ jobs:
           PACK_HELP="${PACK_HELP//$'\n'/'%0A'}"
           PACK_HELP="${PACK_HELP//$'\r'/'%0D'}"
           echo "::set-output name=help::$PACK_HELP"
-      - name: Generate changelog
-        uses: ./.github/workflows/actions/release-notes
-        id: changelog
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          milestone: ${{ env.PACK_MILESTONE }}
+#      - name: Generate changelog
+#        uses: ./.github/workflows/actions/release-notes
+#        id: changelog
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          milestone: ${{ env.PACK_MILESTONE }}
       - name: Create Pre-Release
         if: ${{ env.PACK_VERSION != env.PACK_MILESTONE }}
         uses: softprops/action-gh-release@v1
