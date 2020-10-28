@@ -20,7 +20,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        config: [macos, linux, windows-lcow, windows-wcow]
+        config: [macos, linux]
+#        config: [macos, linux, windows-lcow, windows-wcow]
         include:
           - config: macos
             os: macos
@@ -32,16 +33,16 @@ jobs:
             runner: ubuntu-latest
             no_docker: "false"
             pack_bin: pack
-          - config: windows-lcow
-            os: windows
-            runner: [self-hosted, windows]
-            no_docker: "false"
-            pack_bin: pack.exe
-          - config: windows-wcow
-            os: windows
-            runner: [self-hosted, windows, wcow]
-            no_docker: "false"
-            pack_bin: pack.exe
+#          - config: windows-lcow
+#            os: windows
+#            runner: [self-hosted, windows]
+#            no_docker: "false"
+#            pack_bin: pack.exe
+#          - config: windows-wcow
+#            os: windows
+#            runner: [self-hosted, windows, wcow]
+#            no_docker: "false"
+#            pack_bin: pack.exe
     runs-on: ${{ matrix.runner }}
     env:
       PACK_BIN: ${{ matrix.pack_bin }}
@@ -114,12 +115,6 @@ jobs:
 #          echo "PACK_MILESTONE=${milestone}" >> $GITHUB_ENV
       - name: Download artifacts
         uses: actions/download-artifact@v2
-      - name: Test contents
-        run: |
-          ls
-          ls pack-macos
-          ls pack-linux
-          ls pack-windows
       - name: Package artifacts - macos
         run: |
           chmod +x pack-macos/pack
@@ -132,11 +127,11 @@ jobs:
           filename=pack-v${{ env.PACK_VERSION }}-linux.tgz
           tar -C pack-linux -vzcf $filename pack
           shasum -a 256 $filename > $filename.sha256
-      - name: Package artifacts - windows
-        run: |
-          filename=pack-v${{ env.PACK_VERSION }}-windows.zip
-          zip -j $filename pack-windows/pack.exe
-          shasum -a 256 $filename > $filename.sha256
+#      - name: Package artifacts - windows
+#        run: |
+#          filename=pack-v${{ env.PACK_VERSION }}-windows.zip
+#          zip -j $filename pack-windows/pack.exe
+#          shasum -a 256 $filename > $filename.sha256
       - name: Extract lifecycle version
         id: lifecycle_version
         run: |
