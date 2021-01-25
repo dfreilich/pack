@@ -137,10 +137,10 @@ jobs:
             --volume "${PWD}/out:/out"
 
           install: |
-            sudo add-apt-repository ppa:longsleep/golang-backports
-            sudo apt-get update -q -y
-            sudo apt-get install -q -y make
-            sudo apt-get install -q -y golang-go
+            add-apt-repository ppa:longsleep/golang-backports
+            apt-get update -q -y
+            apt-get install -q -y make
+            apt-get install -q -y golang-go
 
           # Produce a binary artifact and place it in the mounted volume
           run: |
