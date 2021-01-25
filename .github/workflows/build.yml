@@ -138,7 +138,7 @@ jobs:
 
           install: |
             apt-get update -q -y
-            apt-get install software-properties-common
+            apt-get install -q -y software-properties-common
             add-apt-repository ppa:longsleep/golang-backports
             apt-get update -q -y
             apt-get install -q -y make
