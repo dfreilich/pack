@@ -8,7 +8,7 @@ on:
       - 'CODEOWNERS'
       - 'LICENSE'
     branches:
-      - main
+#      - main
       - 'release/**'
   pull_request:
     paths-ignore:
