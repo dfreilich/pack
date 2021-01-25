@@ -1,8 +1,8 @@
 name: delivery / archlinux / git
 
 on:
-  push:
-    branches:
+#  push:
+#    branches:
 #      - main
   workflow_dispatch:
 
