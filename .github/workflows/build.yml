@@ -143,6 +143,7 @@ jobs:
             apt-get update -q -y
             apt-get install -q -y make
             apt-get install -q -y golang-go
+            apt-get install -q -y git
 
           # Produce a binary artifact and place it in the mounted volume
           run: |
