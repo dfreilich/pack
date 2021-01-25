@@ -147,7 +147,7 @@ jobs:
 
           # Produce a binary artifact and place it in the mounted volume
           run: |
-            make test
+            env GOARM=${{ matrix.goarm }} GOARCH=${{ matrix.goarch }} GOOS=linux make test
       - uses: actions/upload-artifact@v2
         with:
           name: pack-${{ matrix.arch }}
