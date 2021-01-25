@@ -137,6 +137,8 @@ jobs:
             --volume "${PWD}/out:/out"
 
           install: |
+            apt-get install software-properties-common
+            apt-get update -q -y
             add-apt-repository ppa:longsleep/golang-backports
             apt-get update -q -y
             apt-get install -q -y make
