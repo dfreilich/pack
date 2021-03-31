@@ -1,22 +1,25 @@
 module github.com/buildpacks/pack
 
 require (
+	github.com/Azure/go-autorest/autorest v0.10.2 // indirect
+	github.com/Azure/go-autorest/autorest/validation v0.2.0 // indirect
 	github.com/BurntSushi/toml v0.3.1
 	github.com/Masterminds/semver v1.5.0
 	github.com/Microsoft/hcsshim v0.8.10 // indirect
 	github.com/apex/log v1.9.0
-	github.com/buildpacks/imgutil v0.0.0-20201211223552-8581300fe2b2
-	github.com/buildpacks/lifecycle v0.10.1
+	github.com/aws/aws-sdk-go v1.31.6 // indirect
+	github.com/buildpacks/imgutil v0.0.0-20210323214708-5a2568dd25b6
+	github.com/buildpacks/lifecycle v0.11.0
 	github.com/containerd/containerd v1.4.1 // indirect
 	github.com/containerd/continuity v0.0.0-20200107194136-26c1120b8d41 // indirect
 	github.com/docker/docker v20.10.0-beta1.0.20201110211921-af34b94a78a1+incompatible
 	github.com/docker/go-connections v0.4.0
 	github.com/ghodss/yaml v1.0.0
-	github.com/golang/mock v1.4.4
-	github.com/golang/protobuf v1.4.3 // indirect
-	github.com/google/go-cmp v0.5.4
-	github.com/google/go-containerregistry v0.4.0
+	github.com/golang/mock v1.5.0
+	github.com/google/go-cmp v0.5.5
+	github.com/google/go-containerregistry v0.4.1
 	github.com/google/go-github/v30 v30.1.0
+	github.com/hashicorp/golang-lru v0.5.3 // indirect
 	github.com/heroku/color v0.0.6
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mitchellh/ioprogress v0.0.0-20180201004757-6a23b12fa88e
@@ -40,7 +43,6 @@ require (
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	google.golang.org/genproto v0.0.0-20201022181438-0ff5f38871d5 // indirect
 	google.golang.org/grpc v1.33.1 // indirect
-	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/src-d/go-git.v4 v4.13.1
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
 )
