@@ -126,7 +126,7 @@ jobs:
         env:
           PACK_BUILD: ${{ github.run_number }}
       - name: Test artifacts
-        uses: uraimo/run-on-arch-action@v2.0.5
+        uses: uraimo/run-on-arch-action@v2.0.9
         with:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
