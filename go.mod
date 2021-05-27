@@ -13,8 +13,7 @@ require (
 	github.com/docker/go-connections v0.4.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/golang/mock v1.4.4
-	github.com/golang/protobuf v1.4.3 // indirect
-	github.com/google/go-cmp v0.5.4
+	github.com/google/go-cmp v0.5.5
 	github.com/google/go-containerregistry v0.4.0
 	github.com/google/go-github/v30 v30.1.0
 	github.com/heroku/color v0.0.6
@@ -22,7 +21,7 @@ require (
 	github.com/mitchellh/ioprogress v0.0.0-20180201004757-6a23b12fa88e
 	github.com/moby/sys/mount v0.2.0 // indirect
 	github.com/moby/term v0.0.0-20201110203204-bea5bbe245bf // indirect
-	github.com/onsi/gomega v1.10.4
+	github.com/onsi/gomega v1.13.0
 	github.com/opencontainers/image-spec v1.0.1
 	github.com/opencontainers/runc v0.1.1 // indirect
 	github.com/opencontainers/selinux v1.6.0 // indirect
@@ -40,7 +39,6 @@ require (
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	google.golang.org/genproto v0.0.0-20201022181438-0ff5f38871d5 // indirect
 	google.golang.org/grpc v1.33.1 // indirect
-	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/src-d/go-git.v4 v4.13.1
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
 )
